@@ -1,0 +1,45 @@
+<?xml version="1.0"?> <!-- Based on mobipick -->
+<launch>
+
+  <!-- Define default arguments of launch file for butler robot -->
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="start_paused" default="false"/>
+  <!-- Use timestamps from the simulation (Gazebo) -->
+  <arg name="use_sim_time" default="true"/>
+  <!-- Show Gazebo GUI -->
+  <arg name="gui" default="true"/>
+  <!-- Activating headless mode, allowing to use GPU-based sensors on remote machines -->
+  <arg name="headless" default="false"/>
+  <!-- Select world used by Gazebo -->
+  <arg name="world_name" default="worlds/empty.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable, but can also be an absolute path -->
+  
+  <!-- Default starting pose of butler robot -->
+  <arg name="robot_x"   default="0.0" />
+  <arg name="robot_y"   default="2.0" />
+  <arg name="robot_z"   default="0.1" />
+  <arg name="robot_yaw" default="3.14" />
+
+  <arg name="tf_prefix" default="" doc="tf_prefix to be used by gazebo plugins and in the robot's urdf etc." />
+
+  <arg name="namespace" default="$(arg tf_prefix)" doc="Namespace to push all topics into."/>
+
+  <remap from="mobile_base_controller/cmd_vel" to="cmd_vel" />
+  <remap from="mobile_base_controller/odom" to="odom" />
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="paused" value="$(arg start_paused)" />
+    <arg name="gui" value="$(arg gui)" />
+  </include>
+
+  <include file="$(find butler_gazebo)/launch/butler_gazebo_common.launch">
+    <arg name="robot_x"   value="$(arg robot_x)" />
+    <arg name="robot_y"   value="$(arg robot_y)" />
+    <arg name="robot_z"   value="$(arg robot_z)" />
+    <arg name="robot_yaw" value="$(arg robot_yaw)" />
+    <!-- <arg name="mir_type"  value="$(arg mir_type)" /> -->
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="tf_prefix" value="$(arg tf_prefix)" />
+  </include>
+  
+</launch>

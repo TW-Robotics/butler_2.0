@@ -1,0 +1,81 @@
+<?xml version="1.0"?> <!-- Based on mobipick -->
+<launch>
+
+  <!-- Use GUI elements -->
+  <arg name="gui"   default="false" />
+
+  <!-- Default position and orientation of butler robot -->
+  <arg name="robot_x"   default="0.0" />
+  <arg name="robot_y"   default="0.0" />
+  <arg name="robot_z"   default="0.1" /> <!-- Small offset to avoid clipping through the floor -->
+  <arg name="robot_yaw" default="0.0" />
+
+  <!-- TODO: see if we will use that -->
+  <arg name="tf_prefix" default="" doc="tf_prefix to be used by gazebo plugins and in the robot's urdf etc." />
+
+  <!-- TODO: see if we will use that -->
+  <arg name="prefix" value="$(arg tf_prefix)/" if="$(eval tf_prefix != '')" /> <!-- $(arg prefix) is used in all the config files! TODO: For multiple robots, create groups when loading the parameters to overwrite the arg? -->
+  <arg name="prefix" value=""                  unless="$(eval tf_prefix != '')" />
+  
+  <!-- Name of the robot, in our case "butler" -->
+  <arg name="robot_name" default="butler" doc="Name of the Gazebo robot model (needs to be different for each robot)" />
+
+  <!-- Load URDF -->
+  <include file="$(find butler_description)/launch/upload_butler_description.launch" />
+  
+  <!-- Spawn butler robot into Gazebo -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg robot_name)
+    -J ur5_shoulder_pan_joint 0.00 -J ur5_shoulder_lift_joint -2.10 -J ur5_elbow_joint 2.43 -J ur5_wrist_1_joint -2.05 -J ur5_wrist_2_joint -1.57 -J ur5_wrist_3_joint 3.14
+    -x $(arg robot_x) -y $(arg robot_y) -z $(arg robot_z) -Y $(arg robot_yaw)" respawn="false" output="screen" />
+
+  <!-- EKF -->
+  <include file="$(find mir_gazebo)/launch/includes/ekf.launch.xml">
+      <arg name="tf_prefix" value="$(arg prefix)" />
+  </include>
+
+  <!-- Add passive + mimic joints to joint_states topic -->
+  <!-- <node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <!-- <rosparam param="source_list">[mir/joint_states]</rosparam> -->
+    <param name="rate" value="30.0" />
+  </node>
+  <!-- Robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" />
+  
+  <!-- Load ros_control controller configurations -->
+  <rosparam file="$(find mir_description)/config/joint_state_controller.yaml" command="load" />
+  <rosparam file="$(find mir_description)/config/diffdrive_controller.yaml" command="load" subst_value="true" />
+  <rosparam file="$(find ur_gazebo)/config/ur5_controllers.yaml" command="load"/>
+
+  <!-- Start the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" output="screen" args="joint_state_controller mobile_base_controller  eff_joint_traj_controller" respawn="false"/>
+  
+  <!-- Load teleop -->
+  <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+    <param name="default_topic" value="cmd_vel"/>
+    <param name="default_vx_max" value="1.0" />
+    <param name="default_vx_min" value="-1.0" />
+    <param name="default_vw_max" value="1.5" />
+    <param name="default_vw_min" value="-1.5" />
+  </node>
+
+
+
+<!-- Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame ur5_upper_arm_link at time 47.367000 according to authority unknown_publisher
+         at line 278 in /tmp/binarydeb/ros-noetic-tf2-0.7.6/src/buffer_core.cpp  -->
+  <!-- create combined scan topic (like on real MiR) -->
+  <!-- <node pkg="topic_tools" type="relay" name="b_scan_relay" args="b_scan scan"/>
+  <node pkg="topic_tools" type="relay" name="f_scan_relay" args="f_scan scan"/>
+
+  <node name="b_rep117_laser_filter" pkg="mir_driver" type="rep117_filter.py" output="screen">
+    <remap from="scan" to="b_scan" />
+    <remap from="scan_filtered" to="b_scan_rep117" />
+  </node>
+
+  <node name="f_rep117_laser_filter" pkg="mir_driver" type="rep117_filter.py" output="screen">
+    <remap from="scan" to="f_scan" />
+    <remap from="scan_filtered" to="f_scan_rep117" />
+  </node> -->
+
+</launch>

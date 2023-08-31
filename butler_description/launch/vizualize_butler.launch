@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Define default arguments of launch file for butler robot -->
+  <!-- These are the arguments you can pass this launch file, for example paused:=true -->
+  <!-- Show joint state GUI -->
+  <arg name="gui" default="true" />
+  
+  <!-- Load butler robot -->
+  <include file="$(find butler_description)/launch/upload_butler_description.launch" />
+
+  <!-- Start needed ROS nodes -->  
+  <!-- Chose joint publisher node based on GUI setting -->
+  <node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <!-- Start robot state publisher node -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <!-- Start RViz with config file of butler robot -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find butler_description)/rviz/vizualize_butler.rviz" required="true" />
+
+</launch>

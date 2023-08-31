@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<robot name="butler" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+  <xacro:arg name="joint_limits_parameters_file" default="$(find ur_description)/config/ur5/joint_limits.yaml"/>  <!-- path the to the yaml with the ur5 joint limits. -->
+  <xacro:arg name="kinematics_config" default="$(find ur_description)/config/ur5/default_kinematics.yaml"/>  <!-- path the to the yaml with the arms calibration parameters. -->
+
+  <!-- ############# MIR100 BASE ############## -->
+  <xacro:include filename="$(find mir_description)/urdf/include/mir_100_v1.urdf.xacro" />
+  <xacro:mir_100 prefix=""/>
+
+  <!-- ############## BODY OF BUTLER ############### -->
+  <link name="body">
+    <!--
+    <inertial>
+      <origin xyz="0 0 0.3278534031" rpy="${1.5 * pi} ${0.5 * pi} ${0.5 * pi}" />
+      <mass value="3.349376" />
+      <inertia
+        ixx="0.432077541"
+        ixy="0"
+        ixz="0"
+        iyy="0.369249471"
+        iyz="0"
+        izz="0.179676981" />
+    </inertial>
+    -->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://butler_description/meshes/visual/body.obj" scale="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.271 0.270" rpy="${-pi / 2} 0 ${-pi / 2}" />
+      <geometry>
+        <mesh filename="package://butler_description/meshes/collision/body.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- join butler body with MIR100 -->
+  <joint name="mir_struct_joint" type="fixed">
+    <parent link="surface" />
+    <child link="body" />
+    <!-- TODO: have those values as parameters -->
+    <origin xyz="${0.756/2+0.005} ${-0.542/2} 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <!-- ############## LOGO COVER ############### -->
+  <link name="cover_left">
+    <!-- <xacro:box_inertial mass="2.266" x="${cover_thickness}" y="${structure_length}" z="${cover_height}">
+      <origin xyz="0 0 0" />
+    </xacro:box_inertial> -->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://butler_description/meshes/visual/cover_left_with_logo.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://butler_description/meshes/visual/cover_left_with_logo.dae" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- join logo cover with butler body -->
+  <joint name="cover_left_joint" type="fixed">
+    <origin xyz="${-0.75/2-0.003} ${0.542-0.003/2} ${0.540/2}" rpy="0 0 ${pi / 2}" />
+    <parent link="body" />
+    <child link="cover_left" />
+  </joint>
+
+  <!-- ############### UR5 ARM ################ -->
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur5_macro.xacro" />
+  <xacro:ur5_robot prefix="ur5_" />
+
+  <!-- join UR5 with butler body -->
+  <joint name="struct_ur5_joint" type="fixed">
+      <parent link="body" />
+      <child link="ur5_base_link" />
+    <origin xyz="-0.263 0.271 0.540" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <!-- ############### GAZEBO ################ --> 
+  <!-- <xacro:include filename="$(find mir_description)/urdf/include/common.gazebo.xacro" /> -->
+    <xacro:macro name="controller_plugin_gazebo" params="robot_namespace">
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <xacro:unless value="${robot_namespace == ''}">
+          <robotNamespace>${robot_namespace}</robotNamespace>
+        </xacro:unless>
+        <controlPeriod>0.001</controlPeriod>
+        <legacyModeNS>false</legacyModeNS>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+  <!-- TODO: only the call -->
+  <xacro:controller_plugin_gazebo robot_namespace=""/>
+
+</robot>

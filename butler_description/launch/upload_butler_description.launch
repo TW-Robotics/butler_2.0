@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <!-- <arg name="robot" default="butler" />
+  <arg name="tf_prefix" default="" doc="TF prefix to use for all of butler's TF frames"/>
+  <arg name="joint_limits_parameters_file" default="$(find butler_description)/config/joint_limits.yaml"/>
+  <arg name="ur5_kinematics_file" default="$(find butler_description)/config/ur5_calibration.yaml"/>
+  <arg name="transmission_hw_interface" default="hardware_interface/VelocityJointInterface" /> -->
+  
+  <!-- Find XACRO file (3D model) of butler robot -->
+  <arg name="model" default="$(find butler_description)/urdf/butler.urdf.xacro"/>
+
+  <!-- TODO: see if we will use that -->
+  <arg name="tf_prefix" default="" doc="TF prefix to use for all of the MiR's TF frames"/>
+
+  <!-- Find & load XACRO file (3D model) of butler robot -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+    <!-- robot:=$(arg robot)
+    tf_prefix:=$(arg tf_prefix)
+    joint_limits_parameters_file:=$(arg joint_limits_parameters_file)
+    kinematics_config:=$(arg ur5_kinematics_file)
+    transmission_hw_interface:=$(arg transmission_hw_interface)" /> -->
+</launch>
