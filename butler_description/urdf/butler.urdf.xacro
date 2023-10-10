@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
 <robot name="butler" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  
+
+<!-- https://github.com/DFKI-NI/mobipick/blob/noetic/mobipick_description/urdf/mobipick/mobipick_v1_model.urdf.xacro -->
+
   <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
   <xacro:arg name="joint_limits_parameters_file" default="$(find ur_description)/config/ur5/joint_limits.yaml"/>  <!-- path the to the yaml with the ur5 joint limits. -->
   <xacro:arg name="kinematics_config" default="$(find ur_description)/config/ur5/default_kinematics.yaml"/>  <!-- path the to the yaml with the arms calibration parameters. -->
 
   <!-- ############# MIR100 BASE ############## -->
   <xacro:include filename="$(find mir_description)/urdf/include/mir_100_v1.urdf.xacro" />
+  <!-- TODO: Have all component prefixed and stored as variables -->
   <xacro:mir_100 prefix=""/>
 
   <!-- ############## BODY OF BUTLER ############### -->
@@ -73,8 +76,10 @@
   </joint>
 
   <!-- ############### UR5 ARM ################ -->
-  <xacro:include filename="$(find ur_description)/urdf/inc/ur5_macro.xacro" />
-  <xacro:ur5_robot prefix="ur5_" />
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur5_macro.xacro"/>
+  <xacro:ur5_robot prefix="ur5_">
+    <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+  </xacro:ur5_robot>
 
   <!-- join UR5 with butler body -->
   <joint name="struct_ur5_joint" type="fixed">

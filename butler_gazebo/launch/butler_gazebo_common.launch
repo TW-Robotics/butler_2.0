@@ -33,25 +33,25 @@
       <arg name="tf_prefix" value="$(arg prefix)" />
   </include>
 
-  <!-- Add passive + mimic joints to joint_states topic -->
-  <!-- <node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
-  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <!-- <rosparam param="source_list">[mir/joint_states]</rosparam> -->
-    <param name="rate" value="30.0" />
-  </node>
   <!-- Robot state publisher -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" />
   
   <!-- Load ros_control controller configurations -->
-  <rosparam file="$(find mir_description)/config/joint_state_controller.yaml" command="load" />
-  <rosparam file="$(find mir_description)/config/diffdrive_controller.yaml" command="load" subst_value="true" />
-  <rosparam file="$(find ur_gazebo)/config/ur5_controllers.yaml" command="load"/>
-
-  <!-- Start the controllers -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" output="screen" args="joint_state_controller mobile_base_controller  eff_joint_traj_controller" respawn="false"/>
+  <!-- UR5 -->
+  <arg name="controller_config_file" default="$(find butler_gazebo)/config/arm_controller.yaml" doc="Config file used for defining the ROS-Control controllers."/>
+  <rosparam file="$(arg controller_config_file)" command="load" subst_value="true"/>
+  <!-- MIR 100 -->
+  <rosparam file="$(find mir_description)/config/joint_state_controller.yaml" command="load"/>
+  <rosparam file="$(find mir_description)/config/diffdrive_controller.yaml" command="load" subst_value="true"/>
   
-  <!-- Load teleop -->
+  <!-- List of used controllers -->
+  <arg name="controllers" default="joint_state_controller arm_controller mobile_base_controller" doc="Controllers that are activated by default."/>
+  <!-- <arg name="stopped_controllers" default="joint_group_eff_controller" doc="Controllers that are initally loaded, but not started."/> -->
+
+  <!-- Load and start the controllers listed in the 'controllers' arg. -->
+  <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner" args="$(arg controllers)" output="screen" respawn="false" />
+   
+  <!-- Load teleop for MIR 100 -->
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="cmd_vel"/>
     <param name="default_vx_max" value="1.0" />
@@ -60,22 +60,7 @@
     <param name="default_vw_min" value="-1.5" />
   </node>
 
-
-
-<!-- Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame ur5_upper_arm_link at time 47.367000 according to authority unknown_publisher
-         at line 278 in /tmp/binarydeb/ros-noetic-tf2-0.7.6/src/buffer_core.cpp  -->
-  <!-- create combined scan topic (like on real MiR) -->
-  <!-- <node pkg="topic_tools" type="relay" name="b_scan_relay" args="b_scan scan"/>
-  <node pkg="topic_tools" type="relay" name="f_scan_relay" args="f_scan scan"/>
-
-  <node name="b_rep117_laser_filter" pkg="mir_driver" type="rep117_filter.py" output="screen">
-    <remap from="scan" to="b_scan" />
-    <remap from="scan_filtered" to="b_scan_rep117" />
-  </node>
-
-  <node name="f_rep117_laser_filter" pkg="mir_driver" type="rep117_filter.py" output="screen">
-    <remap from="scan" to="f_scan" />
-    <remap from="scan_filtered" to="f_scan_rep117" />
-  </node> -->
+  <!-- Load teleop for UR5 joints -->
+  <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
 
 </launch>
