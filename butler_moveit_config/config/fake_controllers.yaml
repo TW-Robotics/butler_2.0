@@ -2,6 +2,7 @@ controller_list:
   - name: fake_ur_5_controller
     type: $(arg fake_execution_type)
     joints:
+      - ur5_shoulder_pan_joint
       - ur5_shoulder_lift_joint
       - ur5_elbow_joint
       - ur5_wrist_1_joint
