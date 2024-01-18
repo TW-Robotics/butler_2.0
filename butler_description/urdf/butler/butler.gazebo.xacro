@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="butler_gazebo" params="robot_namespace prefix">
+
+    <!-- Common -->
+    <xacro:include filename="$(find butler_description)/urdf/common.gazebo.xacro" />
+    <xacro:controller_plugin_gazebo robot_namespace="${robot_namespace}"/>
+
+    <!-- MiR100 mobile base -->
+
+    <!-- UR5 arm -->
+    <!-- TODO -->
+
+    <!-- force torque sensor-->
+    <!-- TODO -->
+
+    <!-- Robotiq gripper -->
+    <xacro:include filename="$(find butler_description)/urdf/robotiq_2f_85/robotiq_2f_85.gazebo.xacro" />
+
+    <xacro:mimic_joint_plugins_gazebo prefix="${prefix}gripper_" robot_namespace="${robot_namespace}"/>
+  </xacro:macro>
+</robot>

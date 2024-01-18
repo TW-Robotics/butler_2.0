@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: butler_description
+    relative_path: urdf/butler/butler.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/butler.srdf
+  CONFIG:
+    author_name: Christoph Boehm
+    author_email: christoph.boehm@technikum-wien.at
+    generated_timestamp: 1705561279

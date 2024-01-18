@@ -3,19 +3,25 @@
 
   <!-- Define default arguments of launch file for butler robot -->
   <!-- These are the arguments you can pass this launch file, for example paused:=true -->
-  <!-- Show joint state GUI -->
-  <arg name="gui" default="true" />
+  <arg name="namespace" default="butler" doc="Namespace to push all topics into"/>
+  <arg name="tf_prefix" default="butler" doc="TF prefix to use for all of Mobipick's TF frames"/>
+
+  <arg name="rviz" default="true" />
+  <!-- <arg name="ur5_kinematics_file" default="$(find butler_description)/config/ur5_calibration.yaml" /> -->
   
   <!-- Load butler robot -->
-  <include file="$(find butler_description)/launch/upload_butler_description.launch" />
+  <group ns="$(arg namespace)">
+    <include file="$(find butler_description)/launch/upload_butler_description.launch">
+      <arg name="tf_prefix" value="$(arg tf_prefix)" />
+      <!-- <arg name="ur5_kinematics_file" value="$(arg ur5_kinematics_file)" /> -->
+      <arg name="transmission_hw_interface" value="hardware_interface/PositionJointInterface" />
+    </include>
 
-  <!-- Start needed ROS nodes -->  
-  <!-- Chose joint publisher node based on GUI setting -->
-  <node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
-  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-  <!-- Start robot state publisher node -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-  <!-- Start RViz with config file of butler robot -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find butler_description)/rviz/vizualize_butler.rviz" required="true" />
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz" args="-d $(find butler_description)/rviz/vizualize_butler.rviz" required="true" />
+  </group>
 
 </launch>
