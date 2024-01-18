@@ -194,6 +194,7 @@ ur_5:
     - AITstar
     - ABITstar
     - BITstar
+<<<<<<< HEAD
 gripper:
   planner_configs:
     - AnytimePathShortening
@@ -223,3 +224,5 @@ gripper:
     - AITstar
     - ABITstar
     - BITstar
+=======
+>>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8

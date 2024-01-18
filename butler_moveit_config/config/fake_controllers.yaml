@@ -8,6 +8,7 @@ controller_list:
       - ur5_wrist_1_joint
       - ur5_wrist_2_joint
       - ur5_wrist_3_joint
+<<<<<<< HEAD
   - name: fake_gripper_controller
     type: $(arg fake_execution_type)
     joints:
@@ -17,3 +18,8 @@ initial:  # Define initial robot poses per group
     pose: home_position
   - group: gripper
     pose: gripper_open
+=======
+initial:  # Define initial robot poses per group
+  - group: ur_5
+    pose: home_position
+>>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8

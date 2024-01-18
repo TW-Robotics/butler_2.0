@@ -116,12 +116,15 @@
       <origin rpy="0.0 ${-pi/2} ${pi/2}" xyz="0 0 0"/> 
   </xacro:robotiq_85_gripper>
 
+<<<<<<< HEAD
   <!-- ############### REALSENSE D435 ################ -->
   <!-- <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
   <xacro:sensor_d435 name="camera" parent="${prefix}ur5_tool0">
     <origin xyz="0.0 0.1 0.0" rpy="1.5708 1.5708 0"/>
   </xacro:sensor_d435> -->
 
+=======
+>>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
   <!-- ############### GAZEBO ################ --> 
   <xacro:include filename="$(find butler_description)/urdf/butler/butler.gazebo.xacro" />
   <xacro:butler_gazebo prefix="${prefix}" robot_namespace="" />
