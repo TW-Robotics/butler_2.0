@@ -1,5 +1,5 @@
-ur_5_controller:
-  type: effort_controllers/JointTrajectoryController
+arm_controller:
+  type: position_controllers/JointTrajectoryController
   joints:
     - ur5_shoulder_pan_joint
     - ur5_shoulder_lift_joint
@@ -7,6 +7,16 @@ ur_5_controller:
     - ur5_wrist_1_joint
     - ur5_wrist_2_joint
     - ur5_wrist_3_joint
+  constraints:
+      goal_time: 0.6
+      # vel_tolerance is 0 for due to the movegroup/follow_joint_trajectory/goal tolerance is empty
+      stopped_velocity_tolerance: 0
+      ur5_shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
+      ur5_shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
+      ur5_elbow_joint: {trajectory: 0.1, goal: 0.1}
+      ur5_wrist_1_joint: {trajectory: 0.1, goal: 0.1}
+      ur5_wrist_2_joint: {trajectory: 0.1, goal: 0.1}
+      ur5_wrist_3_joint: {trajectory: 0.1, goal: 0.1}
   gains:
     ur5_shoulder_pan_joint:
       p: 100
@@ -34,6 +44,20 @@ ur_5_controller:
       i: 1
       i_clamp: 1
     ur5_wrist_3_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10
+  
+gripper_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - gripper_robotiq_85_left_knuckle_joint
+  gains:
+    gripper_robotiq_85_left_knuckle_joint:
       p: 100
       d: 1
       i: 1
