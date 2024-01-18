@@ -1,19 +1,31 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 70
+    Help Height: 78
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /Global Options1
         - /Status1
-        - /RobotModel1
-      Splitter Ratio: 0.6852940917015076
-    Tree Height: 302
+      Splitter Ratio: 0.5
+    Tree Height: 555
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.5886790156364441
   - Class: rviz/Views
     Expanded:
       - /Current View1
     Name: Views
     Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Name: Time
+    SyncMode: 0
+    SyncSource: ""
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -39,9 +51,9 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Alpha: 0.800000011920929
+    - Alpha: 1
       Class: rviz/RobotModel
-      Collision Enabled: true
+      Collision Enabled: false
       Enabled: true
       Links:
         All Links Enabled: true
@@ -49,153 +61,198 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        back_laser_link:
+        butler/back_laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        base_footprint:
+        butler/base_footprint:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        bl_caster_rotation_link:
+        butler/base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        bl_caster_wheel_link:
+        butler/bl_caster_rotation_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        body:
+        butler/bl_caster_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        br_caster_rotation_link:
+        butler/body:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        br_caster_wheel_link:
+        butler/br_caster_rotation_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        cover_left:
+        butler/br_caster_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        fl_caster_rotation_link:
+        butler/cover_left:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        fl_caster_wheel_link:
+        butler/fl_caster_rotation_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        fr_caster_rotation_link:
+        butler/fl_caster_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        fr_caster_wheel_link:
+        butler/fr_caster_rotation_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_laser_link:
+        butler/fr_caster_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        imu_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        imu_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_wheel_link:
+        butler/front_laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_wheel_link:
+        butler/gripper_robotiq_85_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        surface:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        ur5_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        ur5_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        ur5_base_link_inertia:
+        butler/gripper_robotiq_85_left_finger_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ur5_flange:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        ur5_forearm_link:
+        butler/gripper_robotiq_85_left_finger_tip_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ur5_shoulder_link:
+        butler/gripper_robotiq_85_left_inner_knuckle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ur5_tool0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        ur5_upper_arm_link:
+        butler/gripper_robotiq_85_left_knuckle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ur5_wrist_1_link:
+        butler/gripper_robotiq_85_right_finger_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ur5_wrist_2_link:
+        butler/gripper_robotiq_85_right_finger_tip_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ur5_wrist_3_link:
+        butler/gripper_robotiq_85_right_inner_knuckle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        us_1_frame:
+        butler/gripper_robotiq_85_right_knuckle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        us_2_frame:
+          Value: true
+        butler/imu_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        butler/imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        butler/left_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/right_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/surface:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        butler/ur5_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        butler/ur5_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        butler/ur5_base_link_inertia:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/ur5_flange:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        butler/ur5_forearm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/ur5_shoulder_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/ur5_tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        butler/ur5_upper_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/ur5_wrist_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/ur5_wrist_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/ur5_wrist_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        butler/us_1_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        butler/us_2_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -205,37 +262,35 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
-    - Class: rviz/TF
-      Enabled: false
-      Filter (blacklist): ""
-      Filter (whitelist): ""
-      Frame Timeout: 15
-      Frames:
-        All Enabled: true
-      Marker Alpha: 1
-      Marker Scale: 1
-      Name: TF
-      Show Arrows: true
-      Show Axes: true
-      Show Names: true
-      Tree:
-        {}
-      Update Interval: 0
-      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: base_link
+    Fixed Frame: butler/base_link
     Frame Rate: 30
   Name: root
   Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
     - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Theta std deviation: 0.2617993950843811
+      Topic: /initialpose
+      X std deviation: 0.5
+      Y std deviation: 0.5
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
   Value: true
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.699401617050171
+      Distance: 3.5963454246520996
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -243,27 +298,33 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.21366079151630402
-        Y: 0.2503439784049988
-        Z: 0.0633460059762001
+        X: 0.07301364839076996
+        Y: -0.14621347188949585
+        Z: 0.2640194296836853
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5149997472763062
+      Pitch: 0.46539822220802307
       Target Frame: <Fixed Frame>
-      Yaw: 5.459997177124023
+      Yaw: 0.8103979825973511
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 800
+  Height: 846
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000010000000000000156000002cafc0200000002fb000000100044006900730070006c006100790073010000003b000001af000000c700fffffffb0000000a0056006900650077007301000001f000000115000000a000ffffff00000354000002ca00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000040000000000000156000002b4fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b000002b4000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002b4fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003b000002b4000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004b00000003efc0100000002fb0000000800540069006d00650100000000000004b00000030700fffffffb0000000800540069006d006501000000000000045000000000000000000000023f000002b400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
   Views:
     collapsed: false
   Width: 1200
-  X: 554
-  Y: 1136
+  X: 2482
+  Y: 91

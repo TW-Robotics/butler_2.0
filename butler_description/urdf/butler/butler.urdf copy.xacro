@@ -2,18 +2,27 @@
 <robot name="butler" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 <!-- https://github.com/DFKI-NI/mobipick/blob/noetic/mobipick_description/urdf/mobipick/mobipick_v1_model.urdf.xacro -->
+  <xacro:arg name="tf_prefix" default="" />
+  <xacro:property name="tf_prefix_" value="$(arg tf_prefix)" />
+  <xacro:if value="${tf_prefix_ == ''}">
+    <xacro:property name="prefix" value="" />
+  </xacro:if>
+  <xacro:unless value="${tf_prefix_ == ''}">
+    <xacro:property name="prefix" value="${tf_prefix_}/" />
+  </xacro:unless>
 
   <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
-  <xacro:arg name="joint_limits_parameters_file" default="$(find ur_description)/config/ur5/joint_limits.yaml"/>  <!-- path the to the yaml with the ur5 joint limits. -->
-  <xacro:arg name="kinematics_config" default="$(find ur_description)/config/ur5/default_kinematics.yaml"/>  <!-- path the to the yaml with the arms calibration parameters. -->
+  <xacro:arg name="joint_limits_parameters_file" default="$(find butler_description)/config/joint_limits.yaml"/>  <!-- path the to the yaml with the ur5 joint limits. -->
+  <xacro:arg name="kinematics_config" default="$(find butler_description)/config/ur5_calibration.yaml"/>  <!-- path the to the yaml with the arms calibration parameters. -->
 
   <!-- ############# MIR100 BASE ############## -->
   <xacro:include filename="$(find mir_description)/urdf/include/mir_100_v1.urdf.xacro" />
-  <!-- TODO: Have all component prefixed and stored as variables -->
-  <xacro:mir_100 prefix=""/>
+  
+  <xacro:mir_100 prefix="${prefix}"/>
 
   <!-- ############## BODY OF BUTLER ############### -->
-  <link name="body">
+  <link name="${prefix}body">
+  <!-- TODO: Needs to have proper values maybe? -->
     <!--
     <inertial>
       <origin xyz="0 0 0.3278534031" rpy="${1.5 * pi} ${0.5 * pi} ${0.5 * pi}" />
@@ -42,15 +51,15 @@
   </link>
 
   <!-- join butler body with MIR100 -->
-  <joint name="mir_struct_joint" type="fixed">
-    <parent link="surface" />
-    <child link="body" />
+  <joint name="${prefix}mir_struct_joint" type="fixed">
+    <parent link="${prefix}surface" />
+    <child link="${prefix}body" />
     <!-- TODO: have those values as parameters -->
     <origin xyz="${0.756/2+0.005} ${-0.542/2} 0.0" rpy="0.0 0.0 0.0" />
   </joint>
 
   <!-- ############## LOGO COVER ############### -->
-  <link name="cover_left">
+  <link name="${prefix}cover_left">
     <!-- <xacro:box_inertial mass="2.266" x="${cover_thickness}" y="${structure_length}" z="${cover_height}">
       <origin xyz="0 0 0" />
     </xacro:box_inertial> -->
@@ -69,39 +78,46 @@
   </link>
 
   <!-- join logo cover with butler body -->
-  <joint name="cover_left_joint" type="fixed">
+  <joint name="${prefix}cover_left_joint" type="fixed">
     <origin xyz="${-0.75/2-0.003} ${0.542-0.003/2} ${0.540/2}" rpy="0 0 ${pi / 2}" />
-    <parent link="body" />
-    <child link="cover_left" />
+    <parent link="${prefix}body" />
+    <child link="${prefix}cover_left" />
   </joint>
 
   <!-- ############### UR5 ARM ################ -->
   <xacro:include filename="$(find ur_description)/urdf/inc/ur5_macro.xacro"/>
-  <xacro:ur5_robot prefix="ur5_">
-    <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
-  </xacro:ur5_robot>
 
   <!-- join UR5 with butler body -->
-  <joint name="struct_ur5_joint" type="fixed">
-      <parent link="body" />
-      <child link="ur5_base_link" />
+  <joint name="${prefix}struct_ur5_joint" type="fixed">
+      <parent link="${prefix}body" />
+      <child link="${prefix}ur5_base_link" />
     <origin xyz="-0.263 0.271 0.540" rpy="0.0 0.0 0.0" />
   </joint>
 
+  <xacro:ur5_robot prefix="${prefix}ur5_"
+    transmission_hw_interface="$(arg transmission_hw_interface)"
+    joint_limits_parameters_file="$(arg joint_limits_parameters_file)"
+    kinematics_parameters_file="$(arg kinematics_config)" />
+
+  <!-- ############### ROBOTIQ 2F 85 GRIPPER ################ -->
+  <!-- <xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" /> -->
+  <xacro:include filename="$(find robotiq_description)/urdf/robotiq_85_gripper.urdf.xacro" />
+
+  <!-- Fixed Joint for Gripper to connect to tool0--> 
+  <!-- <joint name="${prefix}ur5_2f85_joint" type="fixed"> -->
+    <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
+    <!-- <parent link="${prefix}ur5_tool0"/> -->
+    <!-- <child link="${prefix}gripper_robotiq_arg2f_base_link"/> -->
+  <!-- </joint> -->
+
+  <!-- <xacro:robotiq_arg2f_85 prefix="${prefix}gripper_"/> -->
+
+  <xacro:robotiq_85_gripper prefix="${prefix}gripper_" parent="${prefix}ur5_tool0">
+      <origin rpy="0.0 ${-pi/2} ${pi/2}" xyz="0 0 0"/> 
+  </xacro:robotiq_85_gripper>
+
   <!-- ############### GAZEBO ################ --> 
-  <!-- <xacro:include filename="$(find mir_description)/urdf/include/common.gazebo.xacro" /> -->
-    <xacro:macro name="controller_plugin_gazebo" params="robot_namespace">
-    <gazebo>
-      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-        <xacro:unless value="${robot_namespace == ''}">
-          <robotNamespace>${robot_namespace}</robotNamespace>
-        </xacro:unless>
-        <controlPeriod>0.001</controlPeriod>
-        <legacyModeNS>false</legacyModeNS>
-      </plugin>
-    </gazebo>
-  </xacro:macro>
-  <!-- TODO: only the call -->
-  <xacro:controller_plugin_gazebo robot_namespace=""/>
+  <xacro:include filename="$(find butler_description)/urdf/butler/butler.gazebo.xacro" />
+  <xacro:butler_gazebo prefix="${prefix}" robot_namespace="" />
 
 </robot>
