@@ -36,7 +36,6 @@ stomp/ur_5:
         error_rgb: [255, 0, 0]
         publish_intermediate: True
         marker_topic: stomp_trajectory
-<<<<<<< HEAD
         marker_namespace: optimized
 stomp/gripper:
   group_name: gripper
@@ -76,6 +75,4 @@ stomp/gripper:
         error_rgb: [255, 0, 0]
         publish_intermediate: True
         marker_topic: stomp_trajectory
-=======
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
         marker_namespace: optimized

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="butler" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<!-- https://github.com/DFKI-NI/mobipick/blob/noetic/mobipick_description/urdf/mobipick/mobipick_v1_model.urdf.xacro -->
+<!-- based on: https://github.com/DFKI-NI/mobipick/blob/noetic/mobipick_description/urdf/mobipick/mobipick_v1_model.urdf.xacro -->
   <xacro:arg name="tf_prefix" default="" />
   <xacro:property name="tf_prefix_" value="$(arg tf_prefix)" />
   <xacro:if value="${tf_prefix_ == ''}">
@@ -39,13 +39,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://butler_description/meshes/visual/body.obj" scale="0.001 0.001 0.001" />
+        <mesh filename="package://butler_description/meshes/body/visual/body.obj" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0.271 0.270" rpy="${-pi / 2} 0 ${-pi / 2}" />
       <geometry>
-        <mesh filename="package://butler_description/meshes/collision/body.stl" />
+        <mesh filename="package://butler_description/meshes/body/collision/body.stl" />
       </geometry>
     </collision>
   </link>
@@ -66,13 +66,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://butler_description/meshes/visual/cover_left_with_logo.dae" />
+        <mesh filename="package://butler_description/meshes/body/visual/cover_left_with_logo.dae" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://butler_description/meshes/visual/cover_left_with_logo.dae" />
+        <mesh filename="package://butler_description/meshes/body/visual/cover_left_with_logo.dae" />
       </geometry>
     </collision>
   </link>
@@ -99,6 +99,23 @@
     joint_limits_parameters_file="$(arg joint_limits_parameters_file)"
     kinematics_parameters_file="$(arg kinematics_config)" />
 
+  <!-- ############### REALSENSE D435 ################ -->
+  <xacro:include filename="$(find butler_description)/urdf/sensors/_d435.urdf.xacro" />
+  <xacro:sensor_d435 name="${prefix}camera" parent="${prefix}ur5_tool0">
+    <origin xyz="0.0 0.08 0.0" rpy="-1.5708 -1.5708 0"/>
+  </xacro:sensor_d435>
+
+  <!-- <link name="${prefix}sensor_mount_link" />
+  <joint name="${prefix}sensor_mount_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <parent link="${prefix}ur5_tool0" />
+    <child link="${prefix}sensor_mount_link" />
+  </joint>
+
+  <xacro:include filename="$(find butler_description)/urdf/sensors/d435_cam.urdf.xacro" add_plug="true" />
+
+  <xacro:intel_d435_cam prefix="${prefix}" /> -->
+
   <!-- ############### ROBOTIQ 2F 85 GRIPPER ################ -->
   <!-- <xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" /> -->
   <xacro:include filename="$(find robotiq_description)/urdf/robotiq_85_gripper.urdf.xacro" />
@@ -116,15 +133,6 @@
       <origin rpy="0.0 ${-pi/2} ${pi/2}" xyz="0 0 0"/> 
   </xacro:robotiq_85_gripper>
 
-<<<<<<< HEAD
-  <!-- ############### REALSENSE D435 ################ -->
-  <!-- <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
-  <xacro:sensor_d435 name="camera" parent="${prefix}ur5_tool0">
-    <origin xyz="0.0 0.1 0.0" rpy="1.5708 1.5708 0"/>
-  </xacro:sensor_d435> -->
-
-=======
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
   <!-- ############### GAZEBO ################ --> 
   <xacro:include filename="$(find butler_description)/urdf/butler/butler.gazebo.xacro" />
   <xacro:butler_gazebo prefix="${prefix}" robot_namespace="" />

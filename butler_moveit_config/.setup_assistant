@@ -8,8 +8,4 @@ moveit_setup_assistant_config:
   CONFIG:
     author_name: Christoph Boehm
     author_email: christoph.boehm@technikum-wien.at
-<<<<<<< HEAD
     generated_timestamp: 1705587430
-=======
-    generated_timestamp: 1705568676
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8

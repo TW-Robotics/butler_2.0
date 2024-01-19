@@ -9,7 +9,6 @@ controller_list:
       - ur5_elbow_joint
       - ur5_wrist_1_joint
       - ur5_wrist_2_joint
-<<<<<<< HEAD
       - ur5_wrist_3_joint
   - name: gripper_controller
     action_ns: follow_joint_trajectory
@@ -17,6 +16,3 @@ controller_list:
     default: True
     joints:
       - gripper_robotiq_85_left_knuckle_joint
-=======
-      - ur5_wrist_3_joint
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8

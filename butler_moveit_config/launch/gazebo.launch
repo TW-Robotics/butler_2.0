@@ -5,11 +5,7 @@
   <arg name="paused" default="false" doc="Start Gazebo paused"/>
   <arg name="world_name" default="worlds/empty.world" doc="Gazebo world file"/>
   <arg name="world_pose" default="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" doc="Pose to spawn the robot at"/>
-<<<<<<< HEAD
   <arg name="initial_joint_positions" default=" -J gripper_robotiq_85_left_knuckle_joint 0 -J ur5_elbow_joint 2.3174 -J ur5_shoulder_lift_joint -1.8803 -J ur5_shoulder_pan_joint 0 -J ur5_wrist_1_joint -1.0999 -J ur5_wrist_2_joint 0 -J ur5_wrist_3_joint 2.66163" doc="Initial joint configuration of the robot"/>
-=======
-  <arg name="initial_joint_positions" default=" -J ur5_elbow_joint 2.3174 -J ur5_shoulder_lift_joint -1.8803 -J ur5_shoulder_pan_joint 0 -J ur5_wrist_1_joint -1.0999 -J ur5_wrist_2_joint 0 -J ur5_wrist_3_joint 2.66163" doc="Initial joint configuration of the robot"/>
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
 
   <!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch" pass_all_args="true">
@@ -17,11 +13,7 @@
   </include>
 
   <!-- Set the robot urdf on the parameter server -->
-<<<<<<< HEAD
   <param name="robot_description" textfile="$(find butler_moveit_config)/config/gazebo_butler.urdf" />
-=======
-  <param name="robot_description" command="xacro  '$(find butler_description)/urdf/butler/butler.urdf.xacro'" />
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
 
   <!-- Unpause the simulation after loading the robot model -->
   <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />

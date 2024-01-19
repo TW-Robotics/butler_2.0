@@ -771,11 +771,7 @@
         </joint>
         <actuator name="ur5_shoulder_pan_motor">
             <mechanicalReduction>1</mechanicalReduction>
-<<<<<<< HEAD
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-=======
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
         </actuator>
     </transmission>
     <transmission name="ur5_shoulder_lift_trans">
@@ -785,11 +781,7 @@
         </joint>
         <actuator name="ur5_shoulder_lift_motor">
             <mechanicalReduction>1</mechanicalReduction>
-<<<<<<< HEAD
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-=======
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
         </actuator>
     </transmission>
     <transmission name="ur5_elbow_trans">
@@ -799,11 +791,7 @@
         </joint>
         <actuator name="ur5_elbow_motor">
             <mechanicalReduction>1</mechanicalReduction>
-<<<<<<< HEAD
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-=======
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
         </actuator>
     </transmission>
     <transmission name="ur5_wrist_1_trans">
@@ -813,11 +801,7 @@
         </joint>
         <actuator name="ur5_wrist_1_motor">
             <mechanicalReduction>1</mechanicalReduction>
-<<<<<<< HEAD
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-=======
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
         </actuator>
     </transmission>
     <transmission name="ur5_wrist_2_trans">
@@ -827,11 +811,7 @@
         </joint>
         <actuator name="ur5_wrist_2_motor">
             <mechanicalReduction>1</mechanicalReduction>
-<<<<<<< HEAD
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-=======
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
         </actuator>
     </transmission>
     <transmission name="ur5_wrist_3_trans">
@@ -841,11 +821,7 @@
         </joint>
         <actuator name="ur5_wrist_3_motor">
             <mechanicalReduction>1</mechanicalReduction>
-<<<<<<< HEAD
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-=======
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
         </actuator>
     </transmission>
     <!-- links: main serial chain -->
@@ -1365,14 +1341,11 @@
             <offset>0.0</offset>
         </plugin>
     </gazebo>
-<<<<<<< HEAD
     <!-- ############### REALSENSE D435 ################ -->
     <!-- <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
   <xacro:sensor_d435 name="camera" parent="${prefix}ur5_tool0">
     <origin xyz="0.0 0.1 0.0" rpy="1.5708 1.5708 0"/>
   </xacro:sensor_d435> -->
-=======
->>>>>>> 0fff205e22b80033fad84d8c62cb3e19703309a8
     <gazebo>
         <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
             <controlPeriod>0.001</controlPeriod>
