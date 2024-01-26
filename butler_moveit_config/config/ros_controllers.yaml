@@ -1,5 +1,6 @@
-arm_controller:
-  type: position_controllers/JointTrajectoryController
+scaled_pos_joint_traj_controller:
+  action_ns: follow_joint_trajectory
+  type: FollowJointTrajectory
   joints:
     - ur5_shoulder_pan_joint
     - ur5_shoulder_lift_joint

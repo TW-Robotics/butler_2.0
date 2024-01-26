@@ -1,0 +1,21 @@
+<launch>
+  <arg name="sim" default="false" />
+  <arg name="debug" default="false" />
+  
+  <!-- roslaunch ur_robot_driver ur5_bringup.launch robot_ip:=10.0.0.21 kinematics_config:=${HOME}/ur5.yaml -->
+  <include file="$(find ur_robot_driver)/launch/ur5_bringup.launch">
+    <arg name="robot_ip" default="10.0.0.21"/>
+    <arg name="kinematics_config" default="${HOME}/ur5.yaml"/>
+  </include>
+
+  <!-- Remap follow_joint_trajectory -->
+  <remap if="$(arg sim)" from="/scaled_pos_joint_traj_controller/follow_joint_trajectory" to="/eff_joint_traj_controller/follow_joint_trajectory"/>
+
+  <!-- Launch moveit -->
+  <include file="$(find butler_moveit_config)/launch/move_group.launch">
+    <arg name="debug" default="$(arg debug)" />
+  </include>
+
+  <!-- roslaunch ur5_moveit_config moveit_rviz.launch -->
+  <include file="$(find butler_moveit_config)/launch/moveit_rviz.launch"/>
+</launch>
