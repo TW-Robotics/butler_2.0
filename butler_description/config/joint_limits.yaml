@@ -15,9 +15,9 @@ joint_limits:
     has_position_limits: true
     has_velocity_limits: true
     max_effort: 150.0
-    max_position: !degrees  180.0 # =  pi, default:  360.0
+    max_position: !degrees  360.0
     max_velocity: !degrees  180.0
-    min_position: !degrees -180.0 # = -pi, default: -360.0
+    min_position: !degrees -360.0
   shoulder_lift:
     # acceleration limits are not publicly available
     has_acceleration_limits: false
@@ -39,9 +39,9 @@ joint_limits:
     #   "simplification" introduces jumps from one configuration to the opposite one).
     # * shoulder_lift.max_position=0.74: all values > 0.74 are in self collision
     #   (this limit is just an optimization)
-    max_position: !degrees   42.4 # = 0.74, default:  360.0
+    max_position: !degrees  360.0
     max_velocity: !degrees  180.0
-    min_position: !degrees -180.0 # = -pi,  default: -360.0
+    min_position: !degrees -360.0
   elbow_joint:
     # acceleration limits are not publicly available
     has_acceleration_limits: false
@@ -63,9 +63,9 @@ joint_limits:
     # Reasons for additional position limits:
     # * elbow_joint.min_position=0: see comment for shoulder_lift
     # * elbow_joint.max_position=2.93: all values > 2.93 are in self collision
-    max_position: !degrees 167.88 # =2.93, default:  180.0
+    max_position: !degrees  180.0
     max_velocity: !degrees  180.0
-    min_position: !degrees    0.0 # = 0.0, default: -180.0
+    min_position: !degrees -180.0
   wrist_1:
     # acceleration limits are not publicly available
     has_acceleration_limits: false
@@ -75,9 +75,9 @@ joint_limits:
     max_effort: 28.0
     # Reasons for additional position limits:
     # * wrist_1.max_position=0: avoid overstretching the cable guide
-    max_position: !degrees    0.0 # =  pi, default:  360.0
+    max_position: !degrees  360.0
     max_velocity: !degrees  180.0
-    min_position: !degrees -180.0 # = -pi, default: -360.0
+    min_position: !degrees -360.0
   wrist_2:
     # acceleration limits are not publicly available
     has_acceleration_limits: false
@@ -85,9 +85,9 @@ joint_limits:
     has_position_limits: true
     has_velocity_limits: true
     max_effort: 28.0
-    max_position: !degrees  180.0 # =  pi, default:  360.0
+    max_position: !degrees  360.0
     max_velocity: !degrees  180.0
-    min_position: !degrees -180.0 # = -pi, default: -360.0
+    min_position: !degrees -360.0
   wrist_3:
     # acceleration limits are not publicly available
     has_acceleration_limits: false
@@ -102,6 +102,6 @@ joint_limits:
     # Reasons for additional position limits:
     # * wrist_3 limits reduced to avoid overstretching the cable guide
     #   (we have some predefined poses which use wrist_3 = 270 deg, so choose 275 to be on the safe side)
-    max_position: !degrees  275.0 # default:  360.0
+    max_position: !degrees  360.0
     max_velocity: !degrees  180.0
-    min_position: !degrees   30.0 # default: -360.0
+    min_position: !degrees  -360.0
