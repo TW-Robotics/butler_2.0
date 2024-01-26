@@ -102,7 +102,7 @@
   <!-- ############### REALSENSE D435 ################ -->
   <xacro:include filename="$(find butler_description)/urdf/sensors/_d435.urdf.xacro" />
   <xacro:sensor_d435 name="${prefix}camera" parent="${prefix}ur5_tool0">
-    <origin xyz="0.0 0.08 0.0" rpy="-1.5708 -1.5708 0"/>
+    <origin xyz="-0.000854 0 0.029708" rpy="0.0 -0.786 0"/>
   </xacro:sensor_d435>
 
   <!-- <link name="${prefix}sensor_mount_link" />
@@ -118,7 +118,7 @@
 
   <!-- ############### ROBOTIQ 2F 85 GRIPPER ################ -->
   <!-- <xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" /> -->
-  <xacro:include filename="$(find robotiq_description)/urdf/robotiq_85_gripper.urdf.xacro" />
+  <!-- <xacro:include filename="$(find robotiq_description)/urdf/robotiq_85_gripper.urdf.xacro" /> -->
 
   <!-- Fixed Joint for Gripper to connect to tool0--> 
   <!-- <joint name="${prefix}ur5_2f85_joint" type="fixed"> -->
@@ -129,9 +129,9 @@
 
   <!-- <xacro:robotiq_arg2f_85 prefix="${prefix}gripper_"/> -->
 
-  <xacro:robotiq_85_gripper prefix="${prefix}gripper_" parent="${prefix}ur5_tool0">
+  <!-- <xacro:robotiq_85_gripper prefix="${prefix}gripper_" parent="${prefix}ur5_tool0">
       <origin rpy="0.0 ${-pi/2} ${pi/2}" xyz="0 0 0"/> 
-  </xacro:robotiq_85_gripper>
+  </xacro:robotiq_85_gripper> -->
 
   <!-- ############### GAZEBO ################ --> 
   <xacro:include filename="$(find butler_description)/urdf/butler/butler.gazebo.xacro" />

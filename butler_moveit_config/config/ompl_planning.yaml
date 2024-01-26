@@ -194,7 +194,7 @@ ur_5:
     - AITstar
     - ABITstar
     - BITstar
-gripper:
+camera_group:
   planner_configs:
     - AnytimePathShortening
     - SBL
